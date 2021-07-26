@@ -16,8 +16,7 @@ class TodoLists extends Migration
         Schema::create('todo_lists', function (Blueprint $table) {
             $table->id();
             $table->string('todo_name');
-            $table->integer('user_id');
-            $table->dateTime('to_date');
+            $table->string('to_date');
             $table->timestamps();
         });
     }
