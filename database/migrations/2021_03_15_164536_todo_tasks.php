@@ -15,9 +15,9 @@ class TodoTasks extends Migration
     {
         Schema::create('todo_tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('todo_lists_id');
-            $table->string('task_name');
+            $table->integer('todo_list_id');
             $table->string('task_information');
+            $table->boolean('checked')->default(false);
             $table->timestamps();
         });
     }

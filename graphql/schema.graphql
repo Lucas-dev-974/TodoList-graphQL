@@ -1,42 +1,55 @@
-    
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-01-01 13:00:00`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
 type Query {
-    todo_lists: [TodoLists!]! @all
-    todo_list(id: ID @eq): TodoLists @find
+    todo_lists: [TodoList!]! @all
+    todo_list(id: ID @eq): TodoList @find
 }
 
 
-type TodoLists{
+type TodoList{
     id: ID!
     todo_name: String!
-    to_date: String!
-    TodoTask: [TodoTask!]! @hasMany
+    to_date: DateTime!
+    priority: String!
+    details: String!
+    TodoTasks: [TodoTasks!]! @hasMany
 }
 
-type TodoTask{
+type TodoTasks{
     id: ID!
     todo_list_id: Int!
-    task_name: String!
     task_information: String!
-    to_date: String!
+    checked: Boolean!
 }
 
 type Mutation{
-    createTodoLists(
+    createTodoList(
         todo_name: String!
-        to_date: String! 
-    ): TodoLists!  @create
+        to_date: DateTime! 
+        priority: String!
+        details: String!
+    ): TodoList!  @create
 
     updateTodoList(
-        id: ID!, name: String!, to_date: String!
-    ): TodoLists! @update
+        id: ID!, todo_name: String!, to_date: DateTime!, details: String!, priority: String!
+    ): TodoList! @update
 
-    delete_TodoList(id: ID!): TodoLists @delete
+    delete_TodoList(id: ID!): TodoList @delete
 
     createTask(
         todo_list_id: Int!
-        task_name: String!
         task_information: String!
-        to_date: String!
-    ): TodoTask! @create
+    ): TodoTasks! @create
+
+    updateTask(
+        id: ID!
+        task_information: String!,
+        checked: Boolean!
+    ): TodoTasks @update
+    
+    delete_Task(id: ID!): TodoTasks @delete
 }
 

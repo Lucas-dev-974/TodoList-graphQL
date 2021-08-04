@@ -13,11 +13,11 @@ class TodoTasks extends Model
         "todo_list_id",
         "task_name",
         "task_information",
-        "to_date"
+        "checked",
     ];
 
 
     public function TodoLists(){
-        $this->belongsTo(TodoLists::class);
+        $this->belongsTo(TodoList::class);
     }
 }

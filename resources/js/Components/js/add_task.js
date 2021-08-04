@@ -10,7 +10,7 @@ export default{
     data(){
         return{
             dialog: false,
-            entry: ""
+            entry: "",
         }
     },
 
@@ -22,8 +22,11 @@ export default{
                 data: {
                   query: `
                   mutation{
-                    delete_TodoList(id: ${this.todolist.id}){
-                        id, todo_name
+                    createTask(
+                        todo_list_id: ${this.todolist_id},
+                        task_information: "${this.entry.toString()}"
+                    ){
+                        id, task_information
                     }
                   }
                     `
@@ -31,7 +34,11 @@ export default{
             }).then((result) => {
                 if(result.status === 200){
                     console.log(result);
-                    this.$store.commit('delete_todolist', this.todolist.id)
+                    let task = {
+                        todolistID: this.todolist_id,
+                        task: result.data.data.createTask
+                    }
+                    this.$store.commit('add_task', task)
                 }
             });
         }

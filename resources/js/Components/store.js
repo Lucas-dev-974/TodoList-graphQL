@@ -27,17 +27,51 @@ export default new Vuex.Store({
         },
 
         update_todolist(state, todolist){
-            state.todolists.filter((todo) => {
-                if(todo.id === todolist.id){
-                    console.log(todo);
+            for(let i = 0; i < state.todolists.length; i++){
+                if(state.todolists[i].id === todolist.id){
+                    state.todolists[i] = todolist
                 }
-            })
+
+            }      
         },
 
         delete_todolist(state, todolistID){
             for(let i = 0; i < state.todolists.length; i++){
                 if(state.todolists[i].id === todolistID) state.todolists.splice(i, 1)
             }
+        },
+
+
+        add_task(state, task){
+            for(let i = 0; i < state.todolists.length; i++){
+                if(state.todolists[i].id === task.todolistID){
+                    if(typeof(state.todolists[i].TodoTasks) === "undefined"){
+                        state.todolists[i].TodoTasks = new Array(task.task)
+                    }else{
+                        state.todolists[i].TodoTasks.push(task.task)
+                    } 
+                } 
+                    
+            }
+        },
+
+        delete_task(state, task){
+            let index
+            for(let i = 0; i < state.todolists.length; i++){ if(state.todolists[i].id === task.todolistID) index = i }
+            state.todolists[index].TodoTasks = state.todolists[index].TodoTasks.filter(tsk => tsk.id !== task.taskID)
+        },
+
+        update_task(state, task){
+            let index
+            state.todolists.filter(todo => {
+                if(todo.id == task.todo_list_id){
+                    todo.TodoTasks.filter(tsk => {
+                        if(tsk.id == task.id){
+                            tsk = task
+                        }
+                    })
+                }
+            })
         }
     }
 })

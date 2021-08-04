@@ -1,17 +1,11 @@
 import Axios from 'axios'
 
 import TodoList from "../../Components/todolist.vue"
-import Add_todo from "../../Components/add_todolist.vue" 
+import DetailsTodolist from '../../Components/details_todolist.vue'
 
 export default{
     components:{
-        TodoList, Add_todo
-    },
-
-    data(){
-        return{
-            
-        }
+        TodoList, DetailsTodolist, 
     },
 
     mounted(){
@@ -24,12 +18,18 @@ export default{
                     todo_lists{
                         id,
                         todo_name,
-                        to_date
+                        to_date,
+                        priority,
+                        details,
+                        TodoTasks{
+                            task_information, id, checked
+                        }
                     }
                 }
                 `
             }
           }).then((result) => {
+              console.log('result');
               console.log(result);
               this.$store.commit('set_todolists', result.data.data.todo_lists)
           });

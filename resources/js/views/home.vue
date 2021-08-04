@@ -2,7 +2,7 @@
     <v-container grid-list-xs>
         <div class="d-flex justify-center">
             <h3 class="mr-4">TodoLists</h3>
-            <Add_todo />    
+            <DetailsTodolist />    
         </div>
 
         <div class="d-flex justify-center">
